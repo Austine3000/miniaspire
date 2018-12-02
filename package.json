@@ -2,6 +2,10 @@
   "name": "miniaspire",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "10.13.0",
+    "npm": "6.4.1"
+  },
   "dependencies": {
     "connected-react-router": "^4.3.0",
     "husky": "^1.2.0",
