@@ -1,0 +1,50 @@
+#sideMenu {
+  background: #302d43;
+  max-width: 280px;
+  width: 280px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+
+  nav {
+    padding-top: 100px;
+    a {
+      display: block;
+      color: #f4f6f9;
+      text-decoration: none;
+      padding: 15px 30px;
+      font-weight: 300;
+      transition: all 0.3s ease-in-out;
+
+      &:hover {
+        background: #282639;
+        border-left: 5px solid #92cf48;
+        padding: 15px 30px 15px 25px;
+
+        .fas {
+          color: #92cf48;
+        }
+      }
+
+      .fas {
+        color: #f4f6f9;
+        font-size: 1.4rem;
+        margin-right: 0.8rem;
+        display: inline-block;
+        width: 30px;
+        position: relative;
+        top: 2px;
+      }
+
+      &.active {
+        background: #282639;
+        border-left: 5px solid #92cf48;
+        padding: 15px 30px 15px 25px;
+
+        .fas {
+          color: #92cf48;
+        }
+      }
+    }
+  }
+}

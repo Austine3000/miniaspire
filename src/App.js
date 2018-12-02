@@ -1,28 +1,24 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Switch, Route, Redirect } from 'react-router-dom';
+import { ConnectedRouter } from 'connected-react-router';
+import { hot } from 'react-hot-loader';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
-}
+import DashboardRoute from './routes/DashboardRoute';
 
-export default App;
+const App = ({ history }) => {
+  return (
+    <ConnectedRouter history={history}>
+      <Switch>
+        <Route path="/dashboard" component={DashboardRoute} />
+        <Redirect to="/dashboard" from="/" />
+      </Switch>
+    </ConnectedRouter>
+  );
+};
+
+App.propTypes = {
+  history: PropTypes.object
+};
+
+export default hot(module)(App);
