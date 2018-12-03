@@ -1,14 +1,22 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import store from '../../store/configureStore';
 import { push } from 'connected-react-router';
+import * as loanActions from '../../store/actions';
 import './MyLoan.scss';
 
 class MyLoan extends Component {
+  componentWillMount() {
+    this.props.onGetUserLoan(this.props.user.id);
+  }
+
   onRequestLoanHandler = () => {
     store.dispatch(push('/dashboard/myloan/request'));
   };
 
   render() {
+    const userLoan = this.props.userLoan;
     return (
       <div>
         <h3>My Loan</h3>
@@ -37,10 +45,10 @@ class MyLoan extends Component {
           </thead>
           <tbody>
             <tr>
-              <td>40,000</td>
-              <td>0.00</td>
-              <td>2 years</td>
-              <td>Approved</td>
+              <td>{userLoan.amountRequired}</td>
+              <td>{userLoan.amountCleared}</td>
+              <td>{userLoan.loanTerm}</td>
+              <td>{userLoan.status}</td>
               <td>
                 <button type="button" className="btn btn-success">
                   Repay
@@ -54,4 +62,26 @@ class MyLoan extends Component {
   }
 }
 
-export default MyLoan;
+MyLoan.propTypes = {
+  onGetUserLoan: PropTypes.func.isRequired,
+  userLoan: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => {
+  return {
+    userLoan: state.loan.userLoan,
+    user: state.auth.user
+  };
+};
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    onGetUserLoan: id => dispatch(loanActions.getUserLoan(id))
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MyLoan);
