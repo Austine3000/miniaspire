@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
+import store from '../../store/configureStore';
+import { push } from 'connected-react-router';
+
 import './Login.scss';
 
 class Login extends Component {
+  onLoginHandler = () => {
+    store.dispatch(push('/dashboard/overview'));
+  };
   render() {
     return (
       <div className="container">
@@ -22,7 +28,7 @@ class Login extends Component {
                       placeholder="Email address"
                       required
                     />
-                    <label for="inputEmail">Email address</label>
+                    <label htmlFor="inputEmail">Email address</label>
                   </div>
 
                   <div className="form-label-group">
@@ -33,11 +39,12 @@ class Login extends Component {
                       placeholder="Password"
                       required
                     />
-                    <label for="inputPassword">Password</label>
+                    <label htmlFor="inputPassword">Password</label>
                   </div>
                   <button
                     className="btn btn-lg btn-primary btn-block text-uppercase"
                     type="submit"
+                    onClick={() => this.onLoginHandler()}
                   >
                     Login
                   </button>

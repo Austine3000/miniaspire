@@ -146,7 +146,7 @@ h5 {
     }
   }
 }
-.btn {
+.mr-2 {
   border-radius: 40px;
   padding: 20px 30px;
   font-size: 14px;
@@ -160,7 +160,7 @@ h5 {
     outline: none;
     box-shadow: none;
   }
-  &.btn-primary {
+  &.mb-2 {
     background: $primary;
     border-color: $primary;
     color: $white;

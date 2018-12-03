@@ -16,6 +16,14 @@ const AsyncLoan = asyncComponent(() => {
   return import('../containers/Loan/Loan');
 });
 
+const AsyncMyLoan = asyncComponent(() => {
+  return import('../containers/MyLoan/MyLoan');
+});
+
+const AsyncRequest = asyncComponent(() => {
+  return import('../containers/Request/Request');
+});
+
 class DashboardRoute extends Component {
   render() {
     return (
@@ -26,6 +34,8 @@ class DashboardRoute extends Component {
           <Switch>
             <Route path="/dashboard/overview" component={AsyncOverview} />
             <Route path="/dashboard/loan" component={AsyncLoan} />
+            <Route exact path="/dashboard/myloan" component={AsyncMyLoan} />
+            <Route path="/dashboard/myloan/request" component={AsyncRequest} />
             <Redirect to="/dashboard/overview" />
           </Switch>
         </section>

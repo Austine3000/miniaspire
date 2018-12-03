@@ -4,7 +4,7 @@ class Overview extends Component {
   render() {
     return (
       <div>
-        <p>Overview</p>
+        <h3>Overview</h3>
       </div>
     );
   }

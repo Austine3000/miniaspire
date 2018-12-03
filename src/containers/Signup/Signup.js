@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
+import store from '../../store/configureStore';
+import { push } from 'connected-react-router';
 
 class Signup extends Component {
+  onSignupHandler = () => {
+    store.dispatch(push('/dashboard/myloan/request'));
+  };
   render() {
     return (
       <div className="container">
@@ -13,16 +18,16 @@ class Signup extends Component {
                   MiniAspire
                 </NavLink>
                 <form className="form-signin">
-                  <div class="form-label-group">
+                  <div className="form-label-group">
                     <input
                       type="text"
                       id="inputUserame"
-                      class="form-control"
+                      className="form-control"
                       placeholder="Username"
                       required
-                      autofocus
+                      autoFocus
                     />
-                    <label for="inputUserame">Full Name</label>
+                    <label htmlFor="inputUserame">Full Name</label>
                   </div>
 
                   <div className="form-label-group">
@@ -33,7 +38,7 @@ class Signup extends Component {
                       placeholder="Email address"
                       required
                     />
-                    <label for="inputEmail">Email address</label>
+                    <label htmlFor="inputEmail">Email address</label>
                   </div>
 
                   <div className="form-label-group">
@@ -49,6 +54,7 @@ class Signup extends Component {
                   <button
                     className="btn btn-lg btn-primary btn-block text-uppercase"
                     type="submit"
+                    onClick={() => this.onSignupHandler()}
                   >
                     Sign Up
                   </button>
