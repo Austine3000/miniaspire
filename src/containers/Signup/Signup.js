@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
-import './Login.scss';
 
-class Login extends Component {
+class Signup extends Component {
   render() {
     return (
       <div className="container">
@@ -14,6 +13,18 @@ class Login extends Component {
                   MiniAspire
                 </NavLink>
                 <form className="form-signin">
+                  <div class="form-label-group">
+                    <input
+                      type="text"
+                      id="inputUserame"
+                      class="form-control"
+                      placeholder="Username"
+                      required
+                      autofocus
+                    />
+                    <label for="inputUserame">Full Name</label>
+                  </div>
+
                   <div className="form-label-group">
                     <input
                       type="email"
@@ -39,13 +50,13 @@ class Login extends Component {
                     className="btn btn-lg btn-primary btn-block text-uppercase"
                     type="submit"
                   >
-                    Login
+                    Sign Up
                   </button>
                   <NavLink
-                    to="/signup"
+                    to="/login"
                     className="d-block text-center mt-2 small"
                   >
-                    Sign Up
+                    Log In
                   </NavLink>
                 </form>
               </div>
@@ -57,4 +68,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default Signup;

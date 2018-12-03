@@ -8,6 +8,7 @@ import Home from './containers/Home/Home';
 
 import DashboardRoute from './routes/DashboardRoute';
 import Login from './containers/Login/Login';
+import Signup from './containers/Signup/Signup';
 
 const App = ({ history }) => {
   return (
@@ -15,6 +16,7 @@ const App = ({ history }) => {
       <Switch>
         <Route exact path="/" component={Home} />
         <Route path="/login" component={Login} />
+        <Route path="/signup" component={Signup} />
         <Route path="/dashboard" component={DashboardRoute} />
       </Switch>
     </ConnectedRouter>
