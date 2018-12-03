@@ -1,12 +1,50 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import store from '../../store/configureStore';
 import { push } from 'connected-react-router';
+import * as signupActions from '../../store/actions';
 
 class Signup extends Component {
-  onSignupHandler = () => {
-    store.dispatch(push('/dashboard/myloan/request'));
-  };
+  constructor(props, context) {
+    super(props, context);
+    this.state = {
+      fullname: '',
+      email: '',
+      password: '',
+      isLoading: false,
+      dErrors: {}
+    };
+    this.onChange = this.onChange.bind(this);
+    this.onSignupHandler = this.onSignupHandler.bind(this);
+  }
+
+  onChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+
+  onSignupHandler(e) {
+    e.preventDefault();
+    const { email, password, fullname } = this.state;
+    const user = {
+      fullname: fullname,
+      email: email,
+      password: password
+    };
+    this.setState({ dErrors: {}, isLoading: true });
+    this.props
+      .SignupHandler(user)
+      .then(() => {
+        store.dispatch(push('/dashboard/myloan/request'));
+      })
+      .catch(error => {
+        if (error.response === undefined) {
+          // toastr.error("An error occured while submitting form.");
+          this.setState({ isLoading: false });
+        }
+      });
+  }
   render() {
     return (
       <div className="container">
@@ -17,25 +55,30 @@ class Signup extends Component {
                 <NavLink to="/" className="card-title text-center">
                   MiniAspire
                 </NavLink>
-                <form className="form-signin">
+                <form onSubmit={this.onSignupHandler} className="form-signin">
                   <div className="form-label-group">
                     <input
+                      value={this.state.fullname}
+                      onChange={this.onChange}
                       type="text"
                       id="inputUserame"
                       className="form-control"
-                      placeholder="Username"
+                      placeholder="Full Name"
+                      name="fullname"
                       required
-                      autoFocus
                     />
                     <label htmlFor="inputUserame">Full Name</label>
                   </div>
 
                   <div className="form-label-group">
                     <input
+                      value={this.state.email}
+                      onChange={this.onChange}
+                      name="email"
                       type="email"
                       id="inputEmail"
                       className="form-control"
-                      placeholder="Email address"
+                      placeholder="Email"
                       required
                     />
                     <label htmlFor="inputEmail">Email address</label>
@@ -43,18 +86,20 @@ class Signup extends Component {
 
                   <div className="form-label-group">
                     <input
+                      value={this.state.password}
+                      onChange={this.onChange}
+                      name="password"
                       type="password"
                       id="inputPassword"
                       className="form-control"
                       placeholder="Password"
                       required
                     />
-                    <label for="inputPassword">Password</label>
+                    <label htmlFor="inputPassword">Password</label>
                   </div>
                   <button
                     className="btn btn-lg btn-primary btn-block text-uppercase"
                     type="submit"
-                    onClick={() => this.onSignupHandler()}
                   >
                     Sign Up
                   </button>
@@ -74,4 +119,17 @@ class Signup extends Component {
   }
 }
 
-export default Signup;
+Signup.propTypes = {
+  SignupHandler: PropTypes.func.isRequired
+};
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    SignupHandler: payload => dispatch(signupActions.signup(payload))
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Signup);

@@ -18,9 +18,11 @@ class Login extends Component {
       isLoading: false
     };
     this.onChange = this.onChange.bind(this);
+    this.onLoginHandler = this.onLoginHandler.bind(this);
   }
 
-  onLoginHandler = () => {
+  onLoginHandler(e) {
+    e.preventDefault();
     const { email, password } = this.state;
     this.setState({ errors: {}, isLoading: true });
     this.props
@@ -34,7 +36,7 @@ class Login extends Component {
           this.setState({ isLoading: false });
         }
       });
-  };
+  }
 
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
@@ -50,7 +52,7 @@ class Login extends Component {
                 <NavLink to="/" className="card-title text-center">
                   MiniAspire
                 </NavLink>
-                <form className="form-signin">
+                <form onSubmit={this.onLoginHandler} className="form-signin">
                   <div className="form-label-group">
                     <input
                       value={this.state.email}
@@ -58,7 +60,7 @@ class Login extends Component {
                       type="email"
                       id="inputEmail"
                       className="form-control"
-                      placeholder="Email address"
+                      placeholder="Email"
                       name="email"
                       required
                     />
@@ -81,7 +83,6 @@ class Login extends Component {
                   <button
                     className="btn btn-lg btn-primary btn-block text-uppercase"
                     type="submit"
-                    onClick={() => this.onLoginHandler()}
                   >
                     Login
                   </button>

@@ -54,6 +54,12 @@ class UserApi {
     user = Object.assign({}, user); // to avoid manipulating object passed in.
     return new Promise((resolve, reject) => {
       const minLength = 6;
+      const existingUserdetails = users.find(a => a.email === user.email);
+
+      if (existingUserdetails !== undefined) {
+        reject(`Email have already been used.`);
+      }
+
       if (user.fullname.length < minLength) {
         reject(`Full name must be at least ${minLength} characters.`);
       }
@@ -70,6 +76,7 @@ class UserApi {
         //The server would generate ids for new users in a real app.
         //Cloning so copy returned is passed by value rather than by reference.
         user.id = generateId();
+        user.role = null;
         users.push(user);
       }
 
