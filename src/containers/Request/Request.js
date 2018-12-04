@@ -57,7 +57,7 @@ class Request extends Component {
             <div className="leftcontact">
               <div className="form-group">
                 <p>
-                  Loan Term (in weeks) <span>*</span>
+                  Loan Term (weeks) <span>*</span>
                 </p>
                 <input
                   value={this.state.loanTerm}
@@ -75,7 +75,7 @@ class Request extends Component {
             <div className="rightcontact">
               <div className="form-group">
                 <p>
-                  Amount Required <span>*</span>
+                  Amount Required (SGD) <span>*</span>
                 </p>
                 <input
                   value={this.state.amountRequired}
@@ -84,7 +84,7 @@ class Request extends Component {
                   name="amountRequired"
                   id="amountRequired"
                   data-rule="maxlen:10"
-                  placeholder="Enter amount required."
+                  placeholder="Enter amount required, value is in SGD."
                 />
                 <div className="validation" />
               </div>

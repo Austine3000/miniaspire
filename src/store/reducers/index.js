@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import auth from './loginReducer';
-import loan from './loanReducer';
+import auth from './authReducer/authReducer';
+import loan from './loanReducer/loanReducer';
 
 const rootReducer = combineReducers({
   auth,

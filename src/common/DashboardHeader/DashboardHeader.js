@@ -15,7 +15,7 @@ class DashboardHeader extends Component {
       <header>
         <div className="search-area">
           <i className="fas fa-search" />
-          <input type="text" name="" value="" />
+          <input type="text" name="" defaultValue="search" />
         </div>
         <div className="user-area">
           <button

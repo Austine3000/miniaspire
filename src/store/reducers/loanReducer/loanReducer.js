@@ -3,7 +3,7 @@ import {
   GET_ALL_LOAN_SUCCESS,
   APPROVE_DECLINE_SUCCESS,
   REPAY_LOAN_SUCCESS
-} from '../actions/actionTypes';
+} from '../../actions/actionTypes';
 
 const initialState = {
   userLoan: [],
