@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import store from '../../store/configureStore';
 import { push } from 'connected-react-router';
 import * as loanActions from '../../store/actions';
-import myloanTable from '../../components/myLoanTable/myLoanTable';
+import MyLoanTable from '../../components/myLoanTable/myLoanTable';
 
 import './MyLoan.scss';
 
@@ -33,7 +33,7 @@ export class MyLoan extends Component {
         >
           Request for a loan
         </button>
-        <myloanTable
+        <MyLoanTable
           userLoan={userLoan}
           onRepayLoanHandler={this.onRepayLoanHandler}
         />
