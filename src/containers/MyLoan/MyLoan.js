@@ -49,7 +49,11 @@ class MyLoan extends Component {
                 <td>{item.amountRequired}</td>
                 <td>{item.amountCleared}</td>
                 <td>{item.loanTerm}</td>
-                <td>{item.status}</td>
+                <td>
+                  {item.status === null
+                    ? 'Waiting for confirmation'
+                    : item.status}
+                </td>
                 {item.amountCleared >= item.amountRequired ? (
                   <td>Cleared</td>
                 ) : (

@@ -69,9 +69,9 @@ class LoanApi {
               ...e,
               amountCleared: newAmountCleared
             };
-          }
 
-          existingUserdetails = e;
+            existingUserdetails = e;
+          }
 
           return e;
         });
