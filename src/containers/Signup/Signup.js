@@ -6,7 +6,7 @@ import store from '../../store/configureStore';
 import { push } from 'connected-react-router';
 import * as signupActions from '../../store/actions';
 
-class Signup extends Component {
+export class Signup extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {

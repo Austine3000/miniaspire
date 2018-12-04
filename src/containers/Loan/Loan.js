@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as loanActions from '../../store/actions';
+import LoanTable from '../../components/loanTable/loanTable';
 
 import './Loan.scss';
 
-class Loan extends Component {
+export class Loan extends Component {
   componentWillMount() {
     this.props.onGetAllLoan();
   }
@@ -22,52 +23,10 @@ class Loan extends Component {
     return (
       <div>
         <h3>Loan</h3>
-
-        <table className="table table-custom-border">
-          <thead className="thead-light">
-            <tr>
-              <th>S/N</th>
-              <th scope="col">Name</th>
-              <th scope="col">Amount Required</th>
-              <th scope="col">Amount Cleared</th>
-              <th scope="col">Loan term</th>
-              <th scope="col">Status</th>
-              <th />
-            </tr>
-          </thead>
-          <tbody>
-            {allLoans.map((item, i) => (
-              <tr>
-                <td>1</td>
-                <td>{item.user.fullname}</td>
-                <td>{item.amountRequired}</td>
-                <td>{item.amountCleared}</td>
-                <td>{item.loanTerm}</td>
-                <td>{item.status}</td>
-                {item.status === null ? (
-                  <td>
-                    <button
-                      type="button"
-                      class="btn btn-primary btn-right-space"
-                      onClick={() => this.ApproveDeclineHandler(true, item.id)}
-                    >
-                      Approve
-                    </button>
-                    <button
-                      type="button"
-                      class="btn btn-danger"
-                      onClick={() => this.ApproveDeclineHandler(false, item.id)}
-                    >
-                      Decline
-                    </button>
-                  </td>
-                ) : (
-                  <td />
-                )}
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <LoanTable
+          allLoans={allLoans}
+          ApproveDeclineHandler={this.ApproveDeclineHandler}
+        />
       </div>
     );
   }

@@ -7,7 +7,7 @@ import * as loanActions from '../../store/actions';
 
 import './Request.scss';
 
-class Request extends Component {
+export class Request extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {

@@ -4,9 +4,11 @@ import { connect } from 'react-redux';
 import store from '../../store/configureStore';
 import { push } from 'connected-react-router';
 import * as loanActions from '../../store/actions';
+import myloanTable from '../../components/myLoanTable/myLoanTable';
+
 import './MyLoan.scss';
 
-class MyLoan extends Component {
+export class MyLoan extends Component {
   componentWillMount() {
     this.props.onGetUserLoan(this.props.user.id);
   }
@@ -31,52 +33,10 @@ class MyLoan extends Component {
         >
           Request for a loan
         </button>
-
-        <table className="table table-custom-border">
-          <thead className="thead-light">
-            <tr>
-              <th scope="col">Amount Requested</th>
-              <th scope="col">Amount Cleared</th>
-              <th scope="col">Loan term</th>
-              <th scope="col">Status</th>
-              <th />
-              <th />
-            </tr>
-          </thead>
-          <tbody>
-            {userLoan.map((item, i) => (
-              <tr key={i}>
-                <td>{item.amountRequired}</td>
-                <td>{item.amountCleared}</td>
-                <td>{item.loanTerm}</td>
-                <td>
-                  {item.status === null
-                    ? 'Waiting for confirmation'
-                    : item.status}
-                </td>
-                {item.amountCleared >= item.amountRequired ? (
-                  <td>Cleared</td>
-                ) : (
-                  <td />
-                )}
-                {item.amountCleared < item.amountRequired &&
-                item.status === 'Approved' ? (
-                  <td>
-                    <button
-                      type="button"
-                      className="btn btn-success"
-                      onClick={() => this.onRepayLoanHandler(item.id)}
-                    >
-                      Repay
-                    </button>
-                  </td>
-                ) : (
-                  <td />
-                )}
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <myloanTable
+          userLoan={userLoan}
+          onRepayLoanHandler={this.onRepayLoanHandler}
+        />
       </div>
     );
   }
