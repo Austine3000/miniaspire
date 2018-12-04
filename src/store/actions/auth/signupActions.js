@@ -1,5 +1,5 @@
-import * as types from './actionTypes';
-import UserApi from '../../Api/mockUserApi';
+import * as types from '../actionTypes';
+import UserApi from '../../../Api/mockUserApi';
 
 export function setCurrentUser(user) {
   return { type: types.SET_CURRENT_USER, user };

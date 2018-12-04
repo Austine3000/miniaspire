@@ -1,5 +1,5 @@
-import * as types from './actionTypes';
-import LoanApi from '../../Api/mockLoanApi';
+import * as types from '../actionTypes';
+import LoanApi from '../../../Api/mockLoanApi';
 
 export function getUserLoanSuccess(loan) {
   return { type: types.GET_USER_LOAN_SUCCESS, loan };

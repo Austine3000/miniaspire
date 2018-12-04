@@ -63,6 +63,7 @@ class Request extends Component {
                   value={this.state.loanTerm}
                   onChange={this.onChange}
                   type="number"
+                  className="request-input"
                   name="loanTerm"
                   id="loanTerm"
                   data-rule="loanTerm"
@@ -82,6 +83,7 @@ class Request extends Component {
                   onChange={this.onChange}
                   type="number"
                   name="amountRequired"
+                  className="request-input"
                   id="amountRequired"
                   data-rule="maxlen:10"
                   placeholder="Enter amount required, value is in SGD."

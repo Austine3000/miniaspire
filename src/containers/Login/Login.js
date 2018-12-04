@@ -8,7 +8,7 @@ import * as auth from '../../store/actions';
 
 import './Login.scss';
 
-class Login extends Component {
+export class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
