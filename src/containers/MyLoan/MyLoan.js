@@ -15,6 +15,10 @@ class MyLoan extends Component {
     store.dispatch(push('/dashboard/myloan/request'));
   };
 
+  onRepayLoanHandler = id => {
+    this.props.RepayLoanHandler(id);
+  };
+
   render() {
     const userLoan = this.props.userLoan;
     return (
@@ -27,11 +31,6 @@ class MyLoan extends Component {
         >
           Request for a loan
         </button>
-
-        <p>
-          You haven't requested for a loan. Please click on the request button
-          above.
-        </p>
 
         <table className="table table-custom-border">
           <thead className="thead-light">
@@ -59,7 +58,11 @@ class MyLoan extends Component {
                 {item.amountCleared < item.amountRequired &&
                 item.status === 'Approved' ? (
                   <td>
-                    <button type="button" className="btn btn-success">
+                    <button
+                      type="button"
+                      className="btn btn-success"
+                      onClick={() => this.onRepayLoanHandler(item.id)}
+                    >
                       Repay
                     </button>
                   </td>
@@ -78,7 +81,8 @@ class MyLoan extends Component {
 MyLoan.propTypes = {
   onGetUserLoan: PropTypes.func.isRequired,
   userLoan: PropTypes.array.isRequired,
-  user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
+  RepayLoanHandler: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => {
@@ -90,7 +94,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    onGetUserLoan: id => dispatch(loanActions.getUserLoan(id))
+    onGetUserLoan: id => dispatch(loanActions.getUserLoan(id)),
+    RepayLoanHandler: id => dispatch(loanActions.repayLoan(id))
   };
 };
 

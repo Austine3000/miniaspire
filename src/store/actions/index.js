@@ -4,5 +4,6 @@ export {
   getUserLoan,
   loanRequest,
   getAllloans,
-  approveDecline
+  approveDecline,
+  repayLoan
 } from './loanActions';

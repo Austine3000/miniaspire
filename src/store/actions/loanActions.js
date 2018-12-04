@@ -13,6 +13,10 @@ export function approveDeclineSuccess(loan) {
   return { type: types.APPROVE_DECLINE_SUCCESS, loan };
 }
 
+export function repayLoanSuccess(loan) {
+  return { type: types.REPAY_LOAN_SUCCESS, loan };
+}
+
 export function getUserLoan(userId) {
   return function(dispatch) {
     return LoanApi.getUserLoan(userId)
@@ -52,6 +56,18 @@ export function approveDecline(data) {
     return LoanApi.approveDecline(data)
       .then(loans => {
         dispatch(approveDeclineSuccess(loans));
+      })
+      .catch(error => {
+        throw error;
+      });
+  };
+}
+
+export function repayLoan(id) {
+  return function(dispatch) {
+    return LoanApi.rePayLoan(id)
+      .then(loan => {
+        dispatch(repayLoanSuccess(loan));
       })
       .catch(error => {
         throw error;

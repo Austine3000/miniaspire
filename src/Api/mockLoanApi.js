@@ -4,8 +4,9 @@
 let loans = [
   {
     id: '6588449493903',
-    amountRequired: 23000,
+    amountRequired: 20000,
     amountCleared: 0,
+    weeklyPay: 1000,
     loanTerm: 20,
     status: 'Approved',
     user: {
@@ -54,6 +55,32 @@ class LoanApi {
     });
   }
 
+  static rePayLoan(id) {
+    return new Promise((resolve, reject) => {
+      let existingUserdetails = loans.find(a => a.id === id);
+
+      if (existingUserdetails === undefined) {
+        reject("Loan doesn't not exist");
+      } else {
+        loans = loans.map(e => {
+          if (e.id === id && e.amountCleared < e.amountRequired) {
+            const newAmountCleared = e.amountCleared + e.weeklyPay;
+            e = {
+              ...e,
+              amountCleared: newAmountCleared
+            };
+          }
+
+          existingUserdetails = e;
+
+          return e;
+        });
+      }
+
+      resolve(existingUserdetails);
+    });
+  }
+
   static getUserLoan(id) {
     return new Promise((resolve, reject) => {
       let existingUserLoan = loans.filter(a => a.user.userId === id);
@@ -87,6 +114,7 @@ class LoanApi {
         //Cloning so copy returned is passed by value rather than by reference.
         loan.id = generateId();
         loan.amountCleared = 0;
+        loan.weeklyPay = Math.ceil(loan.amountRequired / loan.loanTerm);
         loan.status = null;
         loans.push(loan);
       }
