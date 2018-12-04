@@ -1,3 +1,8 @@
 export { login, logout } from './loginActions';
 export { signup } from './signupActions';
-export { getUserLoan } from './loanActions';
+export {
+  getUserLoan,
+  loanRequest,
+  getAllloans,
+  approveDecline
+} from './loanActions';

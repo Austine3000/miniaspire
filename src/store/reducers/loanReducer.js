@@ -1,7 +1,12 @@
-import { GET_USER_LOAN_SUCCESS } from '../actions/actionTypes';
+import {
+  GET_USER_LOAN_SUCCESS,
+  GET_ALL_LOAN_SUCCESS,
+  APPROVE_DECLINE_SUCCESS
+} from '../actions/actionTypes';
 
 const initialState = {
-  userLoan: {}
+  userLoan: [],
+  allLoans: []
 };
 
 export default (state = initialState, action = {}) => {
@@ -10,6 +15,19 @@ export default (state = initialState, action = {}) => {
       return {
         ...state,
         userLoan: action.loan
+      };
+    case GET_ALL_LOAN_SUCCESS:
+      return {
+        ...state,
+        allLoans: action.loans
+      };
+    case APPROVE_DECLINE_SUCCESS:
+      return {
+        ...state,
+        allLoans: [
+          ...state.allLoans.filter(loan => loan.id !== action.loan.id),
+          Object.assign({}, action.loan)
+        ]
       };
     default:
       return state;

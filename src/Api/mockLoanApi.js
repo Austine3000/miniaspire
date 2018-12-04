@@ -1,9 +1,7 @@
-import delay from './delay';
-
 // This file mocks a web API by working with the hard-coded data below.
 // It uses setTimeout to simulate the delay of an AJAX call.
 // All calls return promises.
-const loans = [
+let loans = [
   {
     id: '6588449493903',
     amountRequired: 23000,
@@ -26,22 +24,31 @@ const generateId = () => {
 class LoanApi {
   static getAllloans() {
     return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve(Object.assign([], loans));
-      }, delay);
+      resolve(Object.assign([], loans));
     });
   }
 
   static approveDecline(approveDecline) {
-    approveDecline = Object.assign({}, approveDecline); // to avoid manipulating object passed in.
     return new Promise((resolve, reject) => {
       const existingUserdetails = loans.find(a => a.id === approveDecline.id);
 
-      if (existingUserdetails === {}) {
-        reject('Invalid email and password');
-      } else if (existingUserdetails.password !== approveDecline.password) {
-        reject('Invalid email and password');
+      if (existingUserdetails === undefined) {
+        reject("Loan doesn't not exist");
+      } else {
+        loans = loans.map(e => {
+          if (e.id === approveDecline.id) {
+            e = {
+              ...e,
+              status: approveDecline.status ? 'Approved' : 'Declined'
+            };
+          }
+          return e;
+        });
       }
+
+      existingUserdetails.status = approveDecline.status
+        ? 'Approved'
+        : 'Declined';
 
       resolve(existingUserdetails);
     });
@@ -49,10 +56,10 @@ class LoanApi {
 
   static getUserLoan(id) {
     return new Promise((resolve, reject) => {
-      let existingUserLoan = loans.find(a => a.user.userId === id);
+      let existingUserLoan = loans.filter(a => a.user.userId === id);
 
-      if (existingUserLoan === undefined) {
-        existingUserLoan = {};
+      if (existingUserLoan === []) {
+        existingUserLoan = [];
         resolve(existingUserLoan);
       }
 
@@ -63,19 +70,12 @@ class LoanApi {
   static loanRequest(loan) {
     loan = Object.assign({}, loan); // to avoid manipulating object passed in.
     return new Promise((resolve, reject) => {
-      const minLength = 6;
-      const existingUserdetails = loans.find(a => a.email === loan.email);
-
-      if (existingUserdetails !== undefined) {
-        reject(`Email have already been used.`);
+      if (loan.amountRequired < 1000) {
+        reject(`Amount must be above 1000 SGD`);
       }
 
-      if (loan.fullname.length < minLength) {
-        reject(`Full name must be at least ${minLength} characters.`);
-      }
-
-      if (loan.password.length < minLength) {
-        reject(`Password must be at least ${minLength} characters.`);
+      if (loan.loanTerm < 0) {
+        reject(`Loan term should be greater than a week.`);
       }
 
       if (loan.id) {
@@ -86,7 +86,8 @@ class LoanApi {
         //The server would generate ids for new users in a real app.
         //Cloning so copy returned is passed by value rather than by reference.
         loan.id = generateId();
-        loan.role = null;
+        loan.amountCleared = 0;
+        loan.status = null;
         loans.push(loan);
       }
 

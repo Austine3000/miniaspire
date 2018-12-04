@@ -41,20 +41,33 @@ class MyLoan extends Component {
               <th scope="col">Loan term</th>
               <th scope="col">Status</th>
               <th />
+              <th />
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>{userLoan.amountRequired}</td>
-              <td>{userLoan.amountCleared}</td>
-              <td>{userLoan.loanTerm}</td>
-              <td>{userLoan.status}</td>
-              <td>
-                <button type="button" className="btn btn-success">
-                  Repay
-                </button>
-              </td>
-            </tr>
+            {userLoan.map((item, i) => (
+              <tr key={i}>
+                <td>{item.amountRequired}</td>
+                <td>{item.amountCleared}</td>
+                <td>{item.loanTerm}</td>
+                <td>{item.status}</td>
+                {item.amountCleared >= item.amountRequired ? (
+                  <td>Cleared</td>
+                ) : (
+                  <td />
+                )}
+                {item.amountCleared < item.amountRequired &&
+                item.status === 'Approved' ? (
+                  <td>
+                    <button type="button" className="btn btn-success">
+                      Repay
+                    </button>
+                  </td>
+                ) : (
+                  <td />
+                )}
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
@@ -64,7 +77,7 @@ class MyLoan extends Component {
 
 MyLoan.propTypes = {
   onGetUserLoan: PropTypes.func.isRequired,
-  userLoan: PropTypes.object.isRequired,
+  userLoan: PropTypes.array.isRequired,
   user: PropTypes.object.isRequired
 };
 
