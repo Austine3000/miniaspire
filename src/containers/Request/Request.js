@@ -14,7 +14,7 @@ class Request extends Component {
       amountRequired: '',
       loanTerm: '',
       isLoading: false,
-      dErrors: {}
+      error: ''
     };
     this.onChange = this.onChange.bind(this);
     this.onRequestHandler = this.onRequestHandler.bind(this);
@@ -35,44 +35,38 @@ class Request extends Component {
         fullname: this.props.user.fullname
       }
     };
-    this.setState({ dErrors: {}, isLoading: true });
+    this.setState({ error: '', isLoading: true });
     this.props
       .loanRequestHandler(loan)
       .then(() => {
         store.dispatch(push('/dashboard/myloan'));
       })
       .catch(error => {
-        if (error.response === undefined) {
-          // toastr.error("An error occured while submitting form.");
-          this.setState({ isLoading: false });
-        }
+        this.setState({ isLoading: false, error: error });
       });
   }
   render() {
+    const { error } = this.state;
     return (
       <div>
         <h3>Request</h3>
         <form onSubmit={this.onRequestHandler}>
           <h1>Fill the form below to request for a loan.</h1>
           <div className="contentform">
-            <div id="sendmessage">
-              {' '}
-              Your message has been sent successfully. Thank you.{' '}
-            </div>
-
+            {error ? <p className="server-error">{this.state.error}</p> : ''}
             <div className="leftcontact">
               <div className="form-group">
                 <p>
-                  Loan term <span>*</span>
+                  Loan Term (in weeks) <span>*</span>
                 </p>
                 <input
-                  loanTerm={this.state.loanTerm}
+                  value={this.state.loanTerm}
                   onChange={this.onChange}
                   type="number"
                   name="loanTerm"
                   id="loanTerm"
                   data-rule="loanTerm"
-                  placeholder="Enter loan term"
+                  placeholder="Enter loan term, value is in weeks."
                 />
                 <div className="validation" />
               </div>
@@ -86,7 +80,7 @@ class Request extends Component {
                 <input
                   value={this.state.amountRequired}
                   onChange={this.onChange}
-                  type="text"
+                  type="number"
                   name="amountRequired"
                   id="amountRequired"
                   data-rule="maxlen:10"

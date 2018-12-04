@@ -14,7 +14,7 @@ class Login extends Component {
     this.state = {
       email: '',
       password: '',
-      errors: {},
+      error: '',
       isLoading: false
     };
     this.onChange = this.onChange.bind(this);
@@ -24,17 +24,14 @@ class Login extends Component {
   onLoginHandler(e) {
     e.preventDefault();
     const { email, password } = this.state;
-    this.setState({ errors: {}, isLoading: true });
+    this.setState({ error: '', isLoading: true });
     this.props
       .LoginHandler({ email, password })
       .then(() => {
         store.dispatch(push('/dashboard/overview'));
       })
       .catch(error => {
-        if (error.response === undefined) {
-          // toastr.error("An error occured while submitting form.");
-          this.setState({ isLoading: false });
-        }
+        this.setState({ isLoading: false, error: error });
       });
   }
 
@@ -43,6 +40,7 @@ class Login extends Component {
   }
 
   render() {
+    const { error } = this.state;
     return (
       <div className="container">
         <div className="row">
@@ -52,6 +50,11 @@ class Login extends Component {
                 <NavLink to="/" className="card-title text-center">
                   MiniAspire
                 </NavLink>
+                {error ? (
+                  <p className="server-error">{this.state.error}</p>
+                ) : (
+                  ''
+                )}
                 <form onSubmit={this.onLoginHandler} className="form-signin">
                   <div className="form-label-group">
                     <input

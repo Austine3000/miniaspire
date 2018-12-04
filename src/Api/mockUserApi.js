@@ -41,9 +41,9 @@ class UserApi {
       const existingUserdetails = users.find(a => a.email === user.email);
 
       if (existingUserdetails === undefined) {
-        reject('Invalid email and password');
+        reject('Invalid email or password');
       } else if (existingUserdetails.password !== user.password) {
-        reject('Invalid email and password');
+        reject('Invalid email or password');
       }
 
       resolve(existingUserdetails);

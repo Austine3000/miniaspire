@@ -97,12 +97,12 @@ class LoanApi {
   static loanRequest(loan) {
     loan = Object.assign({}, loan); // to avoid manipulating object passed in.
     return new Promise((resolve, reject) => {
-      if (loan.amountRequired < 1000) {
+      if (Number(loan.amountRequired) < 1000) {
         reject(`Amount must be above 1000 SGD`);
       }
 
-      if (loan.loanTerm < 0) {
-        reject(`Loan term should be greater than a week.`);
+      if (Number(loan.loanTerm) < 1) {
+        reject(`Loan term should be at least a week.`);
       }
 
       if (loan.id) {
